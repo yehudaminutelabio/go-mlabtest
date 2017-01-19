@@ -1,0 +1,38 @@
+#!/usr/bin/env mlab
+
+FLAG ver=9.5 "Posgres version"
+FLAG -bool detach "detach once the database is ready"
+FLAG -bool bash "start bash"
+FLAG port=5432  Exposed port
+FLAG ip=default IP to be used for server
+
+FROM postgres:$ver
+
+EXPORT PGDATA=/pgdata
+
+RUN << "END"
+  echo $PGDATA
+  sed -e 's/exec gosu postgres .*/exit/' /docker-entrypoint.sh > /tmp/init-pg.sh
+  bash -x /tmp/init-pg.sh postgres
+  rm /tmp/init-pg.sh
+  ls -l $PGDATA
+END
+
+NETCON $ip
+
+EXPOSE 5432 $port
+
+START << END
+  echo "starting"
+  if [ "$detach" = true ]
+  then
+    mlab detach -p :5432 -t 30s &
+  fi
+  if [ "$bash" = true ]
+  then
+    bash
+  else
+    echo running postgres
+    /docker-entrypoint.sh postgres
+  fi
+END

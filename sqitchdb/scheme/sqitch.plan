@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=tests
+
+initial 2016-05-06T03:58:08Z root <root@48a4c8858fec> # with wrong name
+rename 2016-05-06T04:25:56Z root <root@a329e7888362> # correct name

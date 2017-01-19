@@ -1,0 +1,28 @@
+#!/usr/bin/env mlab
+
+FROM ubuntu
+
+FLAG schema=. "schema directory"
+FLAG host=$parentip "ip of the database"
+FLAG port=5432 "port of the database"
+FLAG pgver=9.6
+
+EXPORT PGVER=$pgver
+
+RUN << "END"
+  apt-get update
+
+  apt-get install -y lsb-release
+
+  echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
+
+  apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys ACCC4CF8
+
+  apt-get update && apt-get install -y postgresql-client-$PGVER sqitch
+END
+
+Add $schema /src
+
+WORKDIR /src
+
+START sqitch --engine pg --db-host $host --db-user postgres --db-port $port "$@"

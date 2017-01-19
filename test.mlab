@@ -1,0 +1,15 @@
+#!/usr/bin/env mlab
+
+FROM ubuntu
+
+EXPOSE 1000 0
+
+START << "END"
+echo starting
+echo starting >&2
+mlab detach
+echo 2nd message
+echo 2nd message >&2
+sleep 60
+echo done >&2
+END
