@@ -1,0 +1,9 @@
+language: go
+
+go:
+  - 1.7.x
+
+script:
+  - ci/mlab_init.sh -d $PWD/bin $MLAB_KID $MLAB_SECRET
+  - export PATH=$PATH:$PWD/bin
+  - go test ./...

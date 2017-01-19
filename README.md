@@ -1,5 +1,7 @@
 # Integrate MinuteLab labs into go "Unit" tests
 
+[![godoc reference](https://godoc.org/github.com/minutelab/go-mlabtest?status.png)](https://godoc.org/github.com/minutelab/go-mlabtest)
+[![Build Status](https://travis-ci.org/minutelab/go-mlabtest.svg?branch=master)](https://travis-ci.org/minutelab/go-mlabtest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Support for integrating [MinuteLab](http://minutelab.io) labs inside go "unit" testing.
