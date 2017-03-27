@@ -42,8 +42,10 @@ mv mlab ${DESTDIR}
 MLAB=${DESTDIR}/mlab
 ${MLAB} version
 
+date -u
+
 # Login and configure hsots
-${MLAB} config domain login ${KID} ${SECRET}
+${MLAB} config profiles add ${KID} ${SECRET}
 # Show configuration
 ${MLAB} config servers
 # Test connectivity
