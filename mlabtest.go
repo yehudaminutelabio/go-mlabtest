@@ -131,7 +131,7 @@ func (m *MLab) Log(format string, a ...interface{}) {
 // Close kills the mlab if neccesary and clean after it
 func (m *MLab) Close() error {
 	m.Log("MLab:Close")
-	if m.cmd.ProcessState != nil && !m.cmd.ProcessState.Exited() {
+	if !m.IsClosed() {
 		m.Log("Actually killing process")
 		// process is still alive
 		m.cmd.Process.Kill()
@@ -212,6 +212,16 @@ func (m *MLab) doStart() error {
 // Wait until the lab died (or start failed to start it)
 func (m *MLab) Wait() {
 	<-m.closechan
+}
+
+// IsClosed true if the command is closed
+func (m *MLab) IsClosed() bool {
+	select {
+	case <-m.closechan:
+		return true
+	default:
+		return false
+	}
 }
 
 // NetConfig get the network configuration of a running container
