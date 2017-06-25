@@ -1,0 +1,11 @@
+#!/usr/bin/env mlab
+
+FROM docker:dind
+
+OPTION privileged
+
+EXPOSE 2375
+
+BACKGROUND mlab detach -p :2375 -t 30s
+
+START dockerd-entrypoint.sh $*
